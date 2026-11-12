@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>KRISHNAM FASHION | Online Store</title>
+<style>
+:root{--black:#101010;--gold:#d6ad55;--cream:#fffaf0;--muted:#b9b2a4}
+*{box-sizing:border-box}body{margin:0;background:#f7f5ef;color:#171717;font-family:Arial, sans-serif}
+header{background:var(--black);color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:5;border-bottom:2px solid var(--gold)}
+.brand{font-family:Georgia,serif;font-size:22px;letter-spacing:2px;color:var(--gold);font-weight:bold}.tag{font-size:11px;color:#ddd;letter-spacing:2px;margin-top:4px}
+button{cursor:pointer;border:0;border-radius:7px;padding:11px 15px;font-weight:bold}.gold{background:var(--gold);color:#171717}.dark{background:#171717;color:white}
+.hero{padding:58px 6%;background:linear-gradient(110deg,#111 0%,#242018 65%,#5a4725 100%);color:white}
+.hero small{color:var(--gold);letter-spacing:3px}.hero h1{font: bold clamp(34px,7vw,62px) Georgia,serif;margin:12px 0}.hero p{color:#e8e2d5;max-width:540px;line-height:1.6}
+.wrap{max-width:1100px;margin:auto;padding:28px 5%}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h2{font: bold 27px Georgia,serif}.goldline{height:2px;background:var(--gold);width:55px;margin-top:-10px;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.card{background:white;border:1px solid #e8e1d2;border-radius:12px;overflow:hidden;box-shadow:0 5px 18px #0000000b}
+.pic{height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eee8dc,#d9c9a5);font-size:64px}
+.info{padding:15px}.info h3{margin:0 0 8px}.price{font-size:21px;font-weight:bold;color:#8a641b}.sub{font-size:12px;color:#777;margin:7px 0 12px}
+.actions{display:flex;gap:8px}.actions button{flex:1}
+.pill{background:#f1e7d0;border-radius:30px;padding:8px 12px;font-size:12px}
+.panel{background:#fff;border:1px solid #e8e1d2;border-radius:12px;padding:18px;margin:18px 0}
+input,textarea{width:100%;padding:12px;border:1px solid #d8d0c1;border-radius:7px;margin:6px 0 12px;font:inherit}
+label{font-size:13px;font-weight:bold}
+footer{background:#111;color:#eee;padding:28px 5%;text-align:center;line-height:1.8}footer strong{color:var(--gold)}
+#cartItems{line-height:1.9}.notice{font-size:12px;color:#6b6254}
+@media(max-width:560px){header{padding:14px 4%}.brand{font-size:18px}.hero{padding:42px 6%}}
+</style>
+</head>
+<body>
+<header>
+ <div><div class="brand">KRISHNAM FASHION</div><div class="tag">STYLE • QUALITY • VALUE</div></div>
+ <button class="gold" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">🛍 Cart (<span id="count">0</span>)</button>
+</header>
+<section class="hero">
+ <small>WELCOME TO OUR STORE</small>
+ <h1>आपका अपना<br><span style="color:var(--gold)">Fashion Store.</span></h1>
+ <p>Men's, Women's और हर उम्र के लिए कपड़ों की नई collection. पसंदीदा कपड़े चुनें और अपना order तैयार करें।</p>
+ <button class="gold" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">SHOP COLLECTION →</button>
+</section>
+<main class="wrap">
+ <div class="row"><div><h2 id="products">Featured Collection</h2><div class="goldline"></div></div><span class="pill">BLACK • GOLD • WHITE</span></div>
+ <div class="grid" id="productGrid"></div>
+ <section class="panel" id="cart">
+  <div class="row"><h2>आपका Cart</h2><button class="dark" onclick="clearCart()">Clear cart</button></div>
+  <div id="cartItems">अभी cart खाली है।</div><h3 id="total">Total: ₹0</h3>
+  <h2>Order Details</h2>
+  <label>आपका नाम</label><input id="customer" placeholder="पूरा नाम">
+  <label>Mobile number</label><input id="mobile" inputmode="numeric" maxlength="10" placeholder="10 अंकों का नंबर">
+  <label>Delivery address</label><textarea id="address" rows="3" placeholder="गाँव/शहर, पिन कोड और पूरा पता"></textarea>
+  <button class="gold" onclick="prepareOrder()">Order summary तैयार करें</button>
+  <p class="notice">यह demo order summary बनाता है। अभी payment gateway, live order server और delivery tracking जुड़े हुए नहीं हैं।</p>
+  <textarea id="summary" rows="5" readonly placeholder="आपका order summary यहाँ दिखेगा।"></textarea>
+  <button class="dark" onclick="copyOrder()">Copy order details</button>
+ </section>
+ <section class="panel">
+  <h2>दुकान की जानकारी</h2>
+  <p><b>KRISHNAM कपड़ा शोरूम</b><br>दसाई रोड, पड़ूनी मैदान, बरमण्डल, मध्य प्रदेश</p>
+  <button class="gold" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Krishnam+Kapda+Showroom+Dasai+Road+Paduni+Maidan+Barmandal+Madhya+Pradesh','_blank')">📍 Google Maps पर देखें</button>
+ </section>
+ <section class="panel">
+  <h2>Demo Admin – Product जोड़ें</h2>
+  <label>Product name</label><input id="newName" placeholder="जैसे: Blue Denim Shirt">
+  <label>Price (₹)</label><input id="newPrice" type="number" min="1" placeholder="जैसे: 599">
+  <button class="gold" onclick="addProduct()">Add product</button>
+  <p class="notice">Admin demo में जोड़े गए products इसी browser/device में save होंगे; यह सुरक्षित online admin panel नहीं है।</p>
+ </section>
+</main>
+<footer><strong>KRISHNAM FASHION</strong><br>दसाई रोड, पड़ूनी मैदान, बरमण्डल<br>© 2026 KRISHNAM FASHION</footer>
+<script>
+const defaults=[
+{name:'Baggy Jeans',price:799,icon:'👖',desc:'Trendy everyday style'},
+{name:'Kurta',price:399,icon:'🥻',desc:'Traditional collection'},
+{name:'Banarasi Saree',price:999,icon:'✨',desc:'Elegant festive wear'},
+{name:'White Shirt + Black Shirt FREE',price:899,icon:'👔',desc:'Combo offer • 2 shirts'},
+{name:'T-Shirt',price:299,icon:'👕',desc:'Casual comfort'}
+];
+let products=JSON.parse(localStorage.getItem('kf_products')||'null')||defaults;
+let cart={};
+function render(){
+ const grid=document.getElementById('productGrid');
+ grid.innerHTML=products.map((p,i)=>`<article class="card"><div class="pic">${p.icon||'🛍️'}</div><div class="info"><h3>${escapeHtml(p.name)}</h3><div class="price">₹${Number(p.price).toLocaleString('en-IN')}</div><div class="sub">${escapeHtml(p.desc||'KRISHNAM FASHION collection')}</div><div class="actions"><button class="gold" onclick="addCart(${i})">Add to cart</button></div></div></article>`).join('');
+ updateCart();
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function addCart(i){cart[i]=(cart[i]||0)+1;updateCart()}
+function updateCart(){
+ let entries=Object.entries(cart).filter(([i,q])=>q>0),sum=0;
+ document.getElementById('count').textContent=entries.reduce((a,[i,q])=>a+q,0);
+ document.getElementById('cartItems').innerHTML=entries.length?entries.map(([i,q])=>{let p=products[i],v=p.price*q;sum+=v;return `${escapeHtml(p.name)} × ${q} — ₹${v} <button onclick="cart[${i}]--;updateCart()">−</button> <button onclick="addCart(${i})">+</button>`}).join('<br>'):'अभी cart खाली है।';
+ document.getElementById('total').textContent='Total: ₹'+sum.toLocaleString('en-IN');
+}
+function clearCart(){cart={};updateCart()}
+function prepareOrder(){
+ if(!Object.keys(cart).length){alert('पहले cart में product जोड़ें।');return}
+ let name=document.getElementById('customer').value.trim(),mobile=document.getElementById('mobile').value.trim(),address=document.getElementById('address').value.trim();
+ if(!name||!/^[0-9]{10}$/.test(mobile)||!address){alert('कृपया नाम, सही 10 अंकों का mobile number और पूरा address भरें।');return}
+ let lines=Object.entries(cart).map(([i,q])=>`${products[i].name} × ${q} = ₹${products[i].price*q}`);
+ let total=Object.entries(cart).reduce((s,[i,q])=>s+products[i].price*q,0);
+ document.getElementById('summary').value=`KRISHNAM FASHION ORDER\nName: ${name}\nMobile: ${mobile}\nAddress: ${address}\n\n${lines.join('\n')}\n\nTotal: ₹${total}\n\nOrder confirmation दुकान से अलग से लेना होगा।`;
+}
+async function copyOrder(){let t=document.getElementById('summary');if(!t.value){alert('पहले order summary तैयार करें।');return}try{await navigator.clipboard.writeText(t.value);alert('Order details copy हो गए।')}catch(e){t.select();document.execCommand('copy');alert('Order details copy करने की कोशिश की गई।')}}
+function addProduct(){let n=document.getElementById('newName').value.trim(),p=Number(document.getElementById('newPrice').value);if(!n||!p||p<1){alert('Product name और सही price भरें।');return}products.push({name:n,price:p,icon:'🛍️',desc:'New arrival'});localStorage.setItem('kf_products',JSON.stringify(products));document.getElementById('newName').value='';document.getElementById('newPrice').value='';render()}
+render();
+</script>
+</body></html>
